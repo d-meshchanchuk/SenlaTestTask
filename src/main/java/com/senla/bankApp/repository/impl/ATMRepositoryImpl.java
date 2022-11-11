@@ -6,9 +6,9 @@ import com.senla.bankApp.utils.FileManager;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,14 +20,10 @@ public class ATMRepositoryImpl implements ATMRepository, CommandLineRunner {
     private final FileManager fileManager;
     private Map<String, String> storage;
 
+    @Order(1)
     @Override
     public void run(String... args) throws Exception {
         storage = fileManager.readFile();
-//        Card card = getCard("2222-1111-1111-1111", "1234");
-//        System.out.println(card);
-//        card.setPassword("1111");
-//        saveCard(card);
-//        storage.forEach((s, s2) -> System.out.println(s + " " + s2));
     }
 
     @Override
