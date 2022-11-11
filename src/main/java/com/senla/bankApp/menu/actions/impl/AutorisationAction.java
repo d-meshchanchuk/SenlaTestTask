@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 @Component
 @AllArgsConstructor
-public class GetMoneyAction implements Action {
+public class AutorisationAction implements Action {
 
     private final ATMService atmService;
 
@@ -19,10 +19,13 @@ public class GetMoneyAction implements Action {
         try {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Amount of money:");
-            Integer number = scanner.nextInt();
+            System.out.println("Card number:");
+            String number = scanner.nextLine();
 
-            //atmService.getMoney()
+            System.out.println("Password:");
+            String password = scanner.nextLine();
+
+            atmService.authorization(number, password);
 
         } catch (InputMismatchException e) {
             System.out.println("Некорректный ввод данных");

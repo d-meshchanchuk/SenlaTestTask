@@ -17,7 +17,7 @@ public class MenuController implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        navigator.setCurrentMenu(builder.getRootMenu());
+        navigator.setCurrentMenu(builder.getStartMenu());
         navigator.printMenu();
         Integer index;
         int i = 0;
@@ -26,9 +26,6 @@ public class MenuController implements CommandLineRunner {
                 Scanner scanner = new Scanner(System.in);
                 if (scanner.hasNext()) {
                     index = scanner.nextInt();
-                    if (index.equals(-1)) {
-                        return;
-                    }
                     navigator.navigate(index);
                     navigator.printMenu();
                 }

@@ -19,7 +19,7 @@ public class FileManager {
 
     private final Path path = Paths.get("src/main/resources/repository.txt");
 
-    private void writeInfo(Map<String, String> storage) {
+    public void writeInfo(Map<String, String> storage) {
         try (Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8)) {
 
             List<String> list = new ArrayList<>();

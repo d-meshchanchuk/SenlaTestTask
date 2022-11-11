@@ -17,13 +17,9 @@ public class Navigator {
 
     public void navigate(Integer index) {
         if (currentMenu != null) {
-            // if (currentMenu.getMenuItem().size() > index) {
             MenuItem menuItem = currentMenu.getMenuItem().get(index);
             menuItem.doAction();
             currentMenu = menuItem.getNextMenu();
-            // } else {
-//                System.out.println("Пункт меню не существует");
-//            }
         }
     }
 }

@@ -48,5 +48,6 @@ public class ATMRepositoryImpl implements ATMRepository, CommandLineRunner {
     @Override
     public void saveCard(Card card) {
         storage.put(card.getNumber(), card.getPassword() + " " + String.valueOf(card.getBalance()) + " " + card.getBlock());
+        fileManager.writeInfo(storage);
     }
 }
