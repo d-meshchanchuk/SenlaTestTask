@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
@@ -26,16 +28,39 @@ public class ATMServiceImpl implements ATMService {
     private Boolean isAuthorization = false;
 
 
+
     @Override
     public void authorization(String number, String password) {
 
-        Optional<Card> cardOptional = atmRepository.getCard(number, password);
+        int countFailAuthorization;
+
+        Optional<Card> cardOptional = atmRepository.getCard(number);
 
         if (cardOptional.isPresent()) {
-            isAuthorization = true;
+
             card = cardOptional.get();
+            countFailAuthorization = card.getCountBlock();
+
+            if (LocalDateTime.now().isBefore(card.getTimeBlock())) {
+                throw new AuthorizationException("Card blocked");
+            } else if (password.equals(card.getPassword())) {
+                isAuthorization = true;
+                countFailAuthorization = 0;
+                card.setCountBlock(countFailAuthorization);
+                atmRepository.saveCard(card);
+            } else if (countFailAuthorization == 2) {
+                card.setCountBlock(0);
+                card.setTimeBlock(LocalDateTime.now().plusHours(24));
+                atmRepository.saveCard(card);
+                throw new AuthorizationException("Card blocked");
+            } else {
+                countFailAuthorization++;
+                card.setCountBlock(countFailAuthorization);
+                atmRepository.saveCard(card);
+                throw new AuthorizationException("Invalid password," + countFailAuthorization + " attempts out of 3!");
+            }
         } else {
-            throw new AuthorizationException("Ошибка авторизации");
+            throw new AuthorizationException("Card not found");
         }
     }
 
@@ -43,9 +68,9 @@ public class ATMServiceImpl implements ATMService {
     public void getMoney(Integer sum) {
         if (isAuthorization) {
             if (sum > bankBalance) {
-                throw new NoEnoughMoneyException("Недостаточно средств в банкомате");
+                throw new NoEnoughMoneyException("Not enough money in the ATM");
             } else if (sum > card.getBalance()) {
-                throw new NoEnoughMoneyException("Недостаточно средств на счете");
+                throw new NoEnoughMoneyException("Not enough money in the account");
             } else {
                 card.setBalance(card.getBalance() - sum);
                 bankBalance -= sum;

@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,5 +16,8 @@ public class Card {
     private String number;
     private String password;
     private Integer balance;
-    private String block;
+    private Integer countBlock;
+    private LocalDateTime timeBlock;
+
+
 }

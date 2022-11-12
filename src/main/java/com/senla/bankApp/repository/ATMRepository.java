@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface ATMRepository {
 
-    Optional<Card> getCard(String number, String password);
+    Optional<Card> getCard(String number);
 
     void saveCard(Card card);
 }

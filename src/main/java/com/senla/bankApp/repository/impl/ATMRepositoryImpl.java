@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,28 +28,30 @@ public class ATMRepositoryImpl implements ATMRepository, CommandLineRunner {
     }
 
     @Override
-    public Optional<Card> getCard(String number, String password) {
+    public Optional<Card> getCard(String number) {
 
         Optional<Card> card = Optional.empty();
 
         if (storage.containsKey(number)) {
             String[] info = storage.get(number).split(" ");
-            if (password.equals(info[0])) {
-                card = Optional.of(Card.builder()
-                        .number(number)
-                        .password(info[0])
-                        .balance(Integer.valueOf(info[1]))
-                        .block(info[2])
-                        .build());
-            }
-        }
 
+            card = Optional.of(Card.builder()
+                    .number(number)
+                    .password(info[0])
+                    .balance(Integer.valueOf(info[1]))
+                    .countBlock(Integer.valueOf(info[2]))
+                    .timeBlock("0".equals(info[3]) ? null : LocalDateTime.parse(info[3]))
+                    .build());
+        }
         return card;
     }
 
     @Override
     public void saveCard(Card card) {
-        storage.put(card.getNumber(), card.getPassword() + " " + String.valueOf(card.getBalance()) + " " + card.getBlock());
+        storage.put(card.getNumber(), card.getPassword() + " "
+                + card.getBalance() + " "
+                + card.getCountBlock() + " "
+                + (card.getTimeBlock() == null ? "0" : card.getTimeBlock()));
         fileManager.writeInfo(storage);
     }
 }
