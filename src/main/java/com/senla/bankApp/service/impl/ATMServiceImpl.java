@@ -1,6 +1,7 @@
 package com.senla.bankApp.service.impl;
 
 import com.senla.bankApp.entity.Card;
+import com.senla.bankApp.exception.AuthorizationException;
 import com.senla.bankApp.exception.LimitException;
 import com.senla.bankApp.exception.NoEnoughMoneyException;
 import com.senla.bankApp.repository.impl.ATMRepositoryImpl;
@@ -34,7 +35,7 @@ public class ATMServiceImpl implements ATMService {
             isAuthorization = true;
             card = cardOptional.get();
         } else {
-            throw new ArithmeticException();
+            throw new AuthorizationException("Ошибка авторизации");
         }
     }
 

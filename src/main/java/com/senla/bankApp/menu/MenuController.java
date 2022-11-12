@@ -1,7 +1,7 @@
 package com.senla.bankApp.menu;
 
+import com.senla.bankApp.exception.AuthorizationException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -18,10 +18,10 @@ public class MenuController implements CommandLineRunner {
     private final Navigator navigator;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         navigator.setCurrentMenu(builder.getStartMenu());
         navigator.printMenu();
-        Integer index;
+        int index;
         int i = 0;
         while (true) {
             try {
@@ -33,6 +33,9 @@ public class MenuController implements CommandLineRunner {
                 }
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
                 System.out.println("Некорректный ввод данных, или пункт меню не существует");
+                navigator.printMenu();
+            } catch (AuthorizationException e) {
+                System.out.println(e.getMessage());
                 navigator.printMenu();
             }
         }

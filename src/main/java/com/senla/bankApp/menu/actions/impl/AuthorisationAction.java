@@ -1,12 +1,10 @@
 package com.senla.bankApp.menu.actions.impl;
 
-import com.senla.bankApp.exception.AuthorizationException;
 import com.senla.bankApp.menu.actions.Action;
 import com.senla.bankApp.service.ATMService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Component
@@ -17,7 +15,7 @@ public class AuthorisationAction implements Action {
 
     @Override
     public void execute() {
-        try {
+
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Card number:");
@@ -27,11 +25,5 @@ public class AuthorisationAction implements Action {
             String password = scanner.nextLine();
 
             atmService.authorization(number, password);
-
-        } catch (InputMismatchException e) {
-            System.out.println("Некорректный ввод данных");
-        } catch (AuthorizationException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

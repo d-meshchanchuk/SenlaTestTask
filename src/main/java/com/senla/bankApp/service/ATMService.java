@@ -1,11 +1,8 @@
 package com.senla.bankApp.service;
 
-import com.senla.bankApp.entity.Card;
 import com.senla.bankApp.exception.AuthorizationException;
 import com.senla.bankApp.exception.LimitException;
 import com.senla.bankApp.exception.NoEnoughMoneyException;
-
-import java.math.BigDecimal;
 
 public interface ATMService {
 

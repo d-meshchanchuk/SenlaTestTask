@@ -1,12 +1,11 @@
 package com.senla.bankApp.menu.actions.impl;
 
-import com.senla.bankApp.entity.Card;
+import com.senla.bankApp.exception.NoEnoughMoneyException;
 import com.senla.bankApp.menu.actions.Action;
 import com.senla.bankApp.service.ATMService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Component
@@ -23,11 +22,8 @@ public class GetMoneyAction implements Action {
             System.out.println("Amount of money:");
             Integer sum = scanner.nextInt();
             atmService.getMoney(sum);
-        } catch (InputMismatchException e) {
-            System.out.println("Некорректный ввод данных");
-        } catch (Exception e) {
-            //todo
-            e.printStackTrace();
+        } catch (NoEnoughMoneyException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

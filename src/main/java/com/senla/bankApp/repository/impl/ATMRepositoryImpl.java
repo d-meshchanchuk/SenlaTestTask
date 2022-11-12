@@ -21,11 +21,9 @@ public class ATMRepositoryImpl implements ATMRepository, CommandLineRunner {
     private final FileManager fileManager;
     private Map<String, String> storage;
 
-    @Order(1)
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         storage = fileManager.readFile();
-        System.out.println("saasfagsdgsdgsd");
     }
 
     @Override
