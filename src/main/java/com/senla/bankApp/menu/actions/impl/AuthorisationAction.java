@@ -1,5 +1,6 @@
 package com.senla.bankApp.menu.actions.impl;
 
+import com.senla.bankApp.exception.AuthorizationException;
 import com.senla.bankApp.menu.actions.Action;
 import com.senla.bankApp.service.ATMService;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 @Component
 @AllArgsConstructor
-public class AutorisationAction implements Action {
+public class AuthorisationAction implements Action {
 
     private final ATMService atmService;
 
@@ -29,9 +30,8 @@ public class AutorisationAction implements Action {
 
         } catch (InputMismatchException e) {
             System.out.println("Некорректный ввод данных");
-        } catch (Exception e) {
-            //todo
-            e.printStackTrace();
+        } catch (AuthorizationException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

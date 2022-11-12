@@ -1,6 +1,8 @@
 package com.senla.bankApp.service.impl;
 
 import com.senla.bankApp.entity.Card;
+import com.senla.bankApp.exception.LimitException;
+import com.senla.bankApp.exception.NoEnoughMoneyException;
 import com.senla.bankApp.repository.impl.ATMRepositoryImpl;
 import com.senla.bankApp.service.ATMService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,47 +26,43 @@ public class ATMServiceImpl implements ATMService {
 
 
     @Override
-    public Boolean authorization(String number, String password) {
+    public void authorization(String number, String password) {
 
         Optional<Card> cardOptional = atmRepository.getCard(number, password);
 
         if (cardOptional.isPresent()) {
             isAuthorization = true;
             card = cardOptional.get();
-        }
-
-        return isAuthorization;
-    }
-
-    @Override
-    public Boolean getMoney(Integer sum) throws Exception {
-        if (sum < bankBalance) {
-            card.setBalance(card.getBalance() - sum);
-            bankBalance -= sum;
-            atmRepository.saveCard(card);
-            return true;
         } else {
-            throw new Exception();
+            throw new ArithmeticException();
         }
     }
 
     @Override
-    public Boolean putMoney(Integer sum) throws Exception {
-        if (sum < topUpLimit) {
-            card.setBalance(card.getBalance() + sum);
-            bankBalance += sum;
-            atmRepository.saveCard(card);
-            return true;
-        } else {
-            throw new Exception();
+    public void getMoney(Integer sum) {
+        if (isAuthorization) {
+            if (sum > bankBalance) {
+                throw new NoEnoughMoneyException("Недостаточно средств в банкомате");
+            } else if (sum > card.getBalance()) {
+                throw new NoEnoughMoneyException("Недостаточно средств на счете");
+            } else {
+                card.setBalance(card.getBalance() - sum);
+                bankBalance -= sum;
+                atmRepository.saveCard(card);
+            }
         }
     }
 
-    public Boolean getAuthorization() {
-        return isAuthorization;
-    }
-
-    public void setAuthorization(Boolean authorization) {
-        isAuthorization = authorization;
+    @Override
+    public void putMoney(Integer sum) {
+        if (isAuthorization) {
+            if (sum < topUpLimit) {
+                card.setBalance(card.getBalance() + sum);
+                bankBalance += sum;
+                atmRepository.saveCard(card);
+            } else {
+                throw new LimitException("Превышение лимита на пополнение(Текущий лимит: " + topUpLimit + ")");
+            }
+        }
     }
 }

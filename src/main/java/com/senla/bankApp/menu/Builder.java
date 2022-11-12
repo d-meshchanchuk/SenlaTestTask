@@ -1,6 +1,6 @@
 package com.senla.bankApp.menu;
 
-import com.senla.bankApp.menu.actions.impl.AutorisationAction;
+import com.senla.bankApp.menu.actions.impl.AuthorisationAction;
 import com.senla.bankApp.menu.actions.impl.ExitAction;
 import com.senla.bankApp.menu.actions.impl.GetMoneyAction;
 import com.senla.bankApp.menu.actions.impl.PutMoneyAction;
@@ -14,7 +14,7 @@ public class Builder {
     private final ExitAction exitAction;
     private final GetMoneyAction getMoneyAction;
     private final PutMoneyAction putMoneyAction;
-    private AutorisationAction autorisationAction;
+    private AuthorisationAction autorisationAction;
     private final Menu startMenu = new Menu("Start menu");
     private final Menu mainMenu = new Menu("Main menu");
 

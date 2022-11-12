@@ -22,10 +22,7 @@ public class GetMoneyAction implements Action {
 
             System.out.println("Amount of money:");
             Integer sum = scanner.nextInt();
-
-            if (atmService.getAuthorization()) {
-                atmService.getMoney(sum);
-            }
+            atmService.getMoney(sum);
         } catch (InputMismatchException e) {
             System.out.println("Некорректный ввод данных");
         } catch (Exception e) {

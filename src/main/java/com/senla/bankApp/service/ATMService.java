@@ -1,18 +1,18 @@
 package com.senla.bankApp.service;
 
 import com.senla.bankApp.entity.Card;
+import com.senla.bankApp.exception.AuthorizationException;
+import com.senla.bankApp.exception.LimitException;
+import com.senla.bankApp.exception.NoEnoughMoneyException;
 
 import java.math.BigDecimal;
 
 public interface ATMService {
 
-    Boolean authorization(String number, String password);
+    void authorization(String number, String password) throws AuthorizationException;
 
-    Boolean getMoney(Integer sum) throws Exception;
+    void getMoney(Integer sum) throws NoEnoughMoneyException;
 
-    Boolean putMoney (Integer sum) throws Exception;
+    void putMoney (Integer sum) throws LimitException;
 
-    Boolean getAuthorization();
-
-    void setAuthorization(Boolean authorization);
 }
