@@ -16,14 +16,14 @@ public class AuthorisationAction implements Action {
     @Override
     public void execute() {
 
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Card number:");
-            String number = scanner.nextLine();
+        System.out.println("Card number:");
+        String number = scanner.nextLine();
 
-            System.out.println("Password:");
-            String password = scanner.nextLine();
+        System.out.println("Password:");
+        String password = scanner.nextLine();
 
-            atmService.authorization(number, password);
+        atmService.authorization(number, password);
     }
 }

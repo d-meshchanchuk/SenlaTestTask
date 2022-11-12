@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
@@ -23,10 +22,8 @@ public class ATMServiceImpl implements ATMService {
     private Integer bankBalance;
     @Autowired
     private ATMRepositoryImpl atmRepository;
-
     private Card card = new Card();
     private Boolean isAuthorization = false;
-
 
 
     @Override
@@ -87,7 +84,7 @@ public class ATMServiceImpl implements ATMService {
                 bankBalance += sum;
                 atmRepository.saveCard(card);
             } else {
-                throw new LimitException("Превышение лимита на пополнение(Текущий лимит: " + topUpLimit + ")");
+                throw new LimitException("Top-up limit exceeded(Current limit: " + topUpLimit + ")");
             }
         }
     }
