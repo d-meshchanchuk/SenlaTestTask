@@ -1,5 +1,6 @@
 package com.senla.bankApp.menu.actions.impl;
 
+import com.senla.bankApp.entity.Card;
 import com.senla.bankApp.menu.actions.Action;
 import com.senla.bankApp.service.ATMService;
 import lombok.AllArgsConstructor;
@@ -20,10 +21,11 @@ public class GetMoneyAction implements Action {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Amount of money:");
-            Integer number = scanner.nextInt();
+            Integer sum = scanner.nextInt();
 
-            //atmService.getMoney()
-
+            if (atmService.getAuthorization()) {
+                atmService.getMoney(sum);
+            }
         } catch (InputMismatchException e) {
             System.out.println("Некорректный ввод данных");
         } catch (Exception e) {

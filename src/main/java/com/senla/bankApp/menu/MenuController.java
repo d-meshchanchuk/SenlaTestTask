@@ -3,11 +3,13 @@ package com.senla.bankApp.menu;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@Order(6)
 @Component
 @AllArgsConstructor
 public class MenuController implements CommandLineRunner {

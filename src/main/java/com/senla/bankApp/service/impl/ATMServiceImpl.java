@@ -5,13 +5,12 @@ import com.senla.bankApp.repository.impl.ATMRepositoryImpl;
 import com.senla.bankApp.service.ATMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
-public class ATMServiceImpl implements ATMService, CommandLineRunner {
+public class ATMServiceImpl implements ATMService {
 
     @Value("${top.up.limit}")
     private Integer topUpLimit;
@@ -20,15 +19,25 @@ public class ATMServiceImpl implements ATMService, CommandLineRunner {
     @Autowired
     private ATMRepositoryImpl atmRepository;
 
+    private Card card = new Card();
+    private Boolean isAuthorization = false;
+
 
     @Override
-    public Card authorization(String number, String password) throws Exception {
+    public Boolean authorization(String number, String password) {
+
         Optional<Card> cardOptional = atmRepository.getCard(number, password);
-        return cardOptional.orElseThrow(Exception::new);
+
+        if (cardOptional.isPresent()) {
+            isAuthorization = true;
+            card = cardOptional.get();
+        }
+
+        return isAuthorization;
     }
 
     @Override
-    public Boolean getMoney(Card card, Integer sum) throws Exception {
+    public Boolean getMoney(Integer sum) throws Exception {
         if (sum < bankBalance) {
             card.setBalance(card.getBalance() - sum);
             bankBalance -= sum;
@@ -40,7 +49,7 @@ public class ATMServiceImpl implements ATMService, CommandLineRunner {
     }
 
     @Override
-    public Boolean putMoney(Card card, Integer sum) throws Exception {
+    public Boolean putMoney(Integer sum) throws Exception {
         if (sum < topUpLimit) {
             card.setBalance(card.getBalance() + sum);
             bankBalance += sum;
@@ -51,8 +60,11 @@ public class ATMServiceImpl implements ATMService, CommandLineRunner {
         }
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        System.out.println(topUpLimit);
+    public Boolean getAuthorization() {
+        return isAuthorization;
+    }
+
+    public void setAuthorization(Boolean authorization) {
+        isAuthorization = authorization;
     }
 }

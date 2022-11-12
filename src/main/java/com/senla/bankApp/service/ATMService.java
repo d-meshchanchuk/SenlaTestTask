@@ -6,9 +6,13 @@ import java.math.BigDecimal;
 
 public interface ATMService {
 
-    Card authorization(String number, String password) throws Exception;
+    Boolean authorization(String number, String password);
 
-    Boolean getMoney(Card card, Integer sum) throws Exception;
+    Boolean getMoney(Integer sum) throws Exception;
 
-    Boolean putMoney (Card card, Integer sum) throws Exception;
+    Boolean putMoney (Integer sum) throws Exception;
+
+    Boolean getAuthorization();
+
+    void setAuthorization(Boolean authorization);
 }
