@@ -40,7 +40,7 @@ public class ATMRepositoryImpl implements ATMRepository, CommandLineRunner {
                     .password(info[0])
                     .balance(Integer.valueOf(info[1]))
                     .countBlock(Integer.valueOf(info[2]))
-                    .timeBlock("0".equals(info[3]) ? null : LocalDateTime.parse(info[3]))
+                    .timeBlock("0".equals(info[3]) ? LocalDateTime.MIN : LocalDateTime.parse(info[3]))
                     .build());
         }
         return card;
@@ -51,7 +51,7 @@ public class ATMRepositoryImpl implements ATMRepository, CommandLineRunner {
         storage.put(card.getNumber(), card.getPassword() + " "
                 + card.getBalance() + " "
                 + card.getCountBlock() + " "
-                + (card.getTimeBlock() == null ? "0" : card.getTimeBlock()));
+                + card.getTimeBlock());
         fileManager.writeInfo(storage);
     }
 }
