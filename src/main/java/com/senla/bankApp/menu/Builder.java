@@ -15,21 +15,21 @@ public class Builder {
     private final GetMoneyAction getMoneyAction;
     private final PutMoneyAction putMoneyAction;
     private AuthorisationAction authorisationAction;
+    private final Menu startMenu = new Menu("Start menu");
     private final Menu mainMenu = new Menu("Main menu");
-    private final Menu authorisationMenu = new Menu("Authorisation menu");
 
 
     public Menu getStartMenu() {
         this.buildMenu();
-        return authorisationMenu;
+        return startMenu;
     }
 
     private void buildMenu() {
-        authorisationMenu.addMenuItem(
+        startMenu.addMenuItem(
                 new MenuItem("0 - Exit",
                         exitAction,
-                        authorisationMenu));
-        authorisationMenu.addMenuItem(
+                        startMenu));
+        startMenu.addMenuItem(
                 new MenuItem("1 - Insert card",
                         authorisationAction,
                         buildMainMenu()));
@@ -38,8 +38,8 @@ public class Builder {
     private Menu buildMainMenu() {
         mainMenu.addMenuItem(
                 new MenuItem("0 - Return card",
-                        exitAction,
-                        authorisationMenu));
+                        () -> System.out.println("Go to Start menu"),
+                        startMenu));
         mainMenu.addMenuItem(
                 new MenuItem("1 - Get money",
                         getMoneyAction,

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-@Order(6)
+@Order(2)
 @Component
 @AllArgsConstructor
 public class MenuController implements CommandLineRunner {
@@ -31,9 +31,9 @@ public class MenuController implements CommandLineRunner {
                     navigator.navigate(index);
                     navigator.printMenu();
                 }
-//            } catch (InputMismatchException | IndexOutOfBoundsException e) {
-//                System.out.println("Некорректный ввод данных, или пункт меню не существует");
-//                navigator.printMenu();
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                System.out.println("Некорректный ввод данных, или пункт меню не существует");
+                navigator.printMenu();
             } catch (AuthorizationException e) {
                 System.out.println(e.getMessage());
                 navigator.printMenu();
