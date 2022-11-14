@@ -1,11 +1,11 @@
 package com.senla.bankApp.utils;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +17,12 @@ import java.util.stream.Stream;
 @Component
 public class FileManager {
 
-    private final Path path = Paths.get("src/main/resources/repository.txt");
+    @Value("${storage.path}")
+    private String path;
 
     public void writeInfo(Map<String, String> storage) {
-        try (Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8)) {
+
+        try (Stream<String> lines = Files.lines(Paths.get(path), StandardCharsets.UTF_8)) {
 
             List<String> list = new ArrayList<>();
 
@@ -30,7 +32,7 @@ public class FileManager {
                 list.add(stringBuilder);
             }
 
-            Files.write(path, list, StandardCharsets.UTF_8);
+            Files.write(Paths.get(path), list, StandardCharsets.UTF_8);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,7 +43,7 @@ public class FileManager {
 
         Map<String, String> storage = new HashMap<>();
 
-        try (Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8)) {
+        try (Stream<String> lines = Files.lines(Paths.get(path), StandardCharsets.UTF_8)) {
 
             storage = lines.collect(Collectors.
                     toMap(x -> x.substring(0, x.indexOf(' ')), x -> x.substring(x.indexOf(' ') + 1, x.length())));

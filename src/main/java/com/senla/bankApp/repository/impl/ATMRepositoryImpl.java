@@ -3,27 +3,22 @@ package com.senla.bankApp.repository.impl;
 import com.senla.bankApp.entity.Card;
 import com.senla.bankApp.repository.ATMRepository;
 import com.senla.bankApp.utils.FileManager;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
-@Order(1)
 @Component
-@AllArgsConstructor
-public class ATMRepositoryImpl implements ATMRepository, CommandLineRunner {
+public class ATMRepositoryImpl implements ATMRepository {
 
     @Autowired
     private final FileManager fileManager;
-    private Map<String, String> storage;
+    private final Map<String, String> storage;
 
-    @Override
-    public void run(String... args) {
+    public ATMRepositoryImpl(FileManager fileManager) {
+        this.fileManager = fileManager;
         storage = fileManager.readFile();
     }
 
