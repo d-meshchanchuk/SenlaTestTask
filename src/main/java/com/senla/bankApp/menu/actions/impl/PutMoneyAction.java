@@ -1,6 +1,6 @@
 package com.senla.bankApp.menu.actions.impl;
 
-import com.senla.bankApp.exception.NoEnoughMoneyException;
+import com.senla.bankApp.exception.LimitException;
 import com.senla.bankApp.menu.actions.Action;
 import com.senla.bankApp.service.ATMService;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class PutMoneyAction implements Action {
             System.out.println("Amount of money:");
             Integer sum = scanner.nextInt();
             atmService.putMoney(sum);
-        } catch (NoEnoughMoneyException e) {
+        } catch (LimitException e) {
             System.out.println(e.getMessage());
         }
     }
