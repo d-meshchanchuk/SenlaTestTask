@@ -8,6 +8,8 @@ public interface ATMService {
 
     void authorization(String number, String password) throws AuthorizationException;
 
+    Integer checkBalance ();
+
     void getMoney(Integer sum) throws NoEnoughMoneyException;
 
     void putMoney (Integer sum) throws LimitException;

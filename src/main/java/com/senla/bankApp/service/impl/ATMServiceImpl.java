@@ -62,6 +62,16 @@ public class ATMServiceImpl implements ATMService {
     }
 
     @Override
+    public Integer checkBalance() {
+        if (isAuthorization) {
+            return card.getBalance();
+        } else {
+            throw new AuthorizationException("");
+        }
+
+    }
+
+    @Override
     public void getMoney(Integer sum) {
         if (isAuthorization) {
             if (sum > bankBalance) {
