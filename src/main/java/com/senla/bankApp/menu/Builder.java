@@ -39,17 +39,18 @@ public class Builder {
                         () -> System.out.println("Go to Start menu"),
                         startMenu));
         mainMenu.addMenuItem(
-                new MenuItem("1 - Get money",
+                new MenuItem("1 - Check balance",
+                        checkBalanceAction,
+                        mainMenu));
+        mainMenu.addMenuItem(
+                new MenuItem("2 - Get money",
                         getMoneyAction,
                         mainMenu));
         mainMenu.addMenuItem(
-                new MenuItem("2 - Put money",
+                new MenuItem("3 - Put money",
                         putMoneyAction,
                         mainMenu));
-        mainMenu.addMenuItem(
-                new MenuItem("3 - Check balance",
-                        checkBalanceAction,
-                        mainMenu));
+
         return mainMenu;
     }
 }
