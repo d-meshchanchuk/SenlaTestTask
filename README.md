@@ -1,13 +1,13 @@
-#ATM simulation
+# ATM simulation
 
-###Functionality
+### Functionality
 
 - Card authorization;
 - Check balance
 - Get money
 - Top up  balance
 
-####Repository format
+#### Repository format
 ```
 /data/repository.txt
 
@@ -18,15 +18,21 @@ Example:
 
 ```
 
-## Quick start
+### Stack
+- Java 11
+- Spring boot
+- Lombok
+- Docker
 
-### Required:
+### Quick start
+
+#### Required:
 
 - Java 11
 - Maven
 - Docker
 
-### Steps:
+#### Steps:
 
 ```
 - git clone https://github.com/d-meshchanchuk/SenlaTestTask.git
